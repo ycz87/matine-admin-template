@@ -10,6 +10,8 @@ import {
   Burger,
   useMantineTheme,
 } from '@mantine/core';
+import { Welcome } from '../components/Welcome/Welcome';
+import { DoubleNavBar } from '../components/DoubleNavBar/DoubleNavBar';
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
@@ -23,11 +25,7 @@ export default function AppShellDemo() {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-          <Text>Application navbar</Text>
-        </Navbar>
-      }
+      navbar={<DoubleNavBar />}
       aside={
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
           <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
@@ -59,6 +57,10 @@ export default function AppShellDemo() {
       }
     >
       <Text>Resize app to see responsive navbar in action</Text>
+      <Welcome />
+      <Welcome />
+      <Welcome />
+      <Welcome />
     </AppShell>
   );
 }

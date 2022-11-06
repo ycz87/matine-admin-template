@@ -147,6 +147,7 @@ export function DoubleNavBar() {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Releases');
   const [activeLink, setActiveLink] = useState('Settings');
+  const [opened, setOpened] = useState(false);
 
   const mainLinks = mainLinksMockdata.map((link) => (
     <Tooltip label={link.label} position="right" withArrow transitionDuration={0} key={link.label}>
@@ -174,8 +175,8 @@ export function DoubleNavBar() {
   ));
 
   return (
-    <Navbar width={{ sm: 300 }}>
-      <Navbar.Section mt="xs">asdfsadf</Navbar.Section>
+    <Navbar hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+      <Navbar.Section mt="xs" />
       <Navbar.Section grow className={classes.wrapper}>
         <div className={classes.aside}>
           <div className={classes.logo}>
