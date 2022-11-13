@@ -31,7 +31,7 @@ const useStyles = createStyles((theme) => ({
 
   main: {
     flex: 1,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
   },
 
   mainLink: {
@@ -82,7 +82,7 @@ const useStyles = createStyles((theme) => ({
   },
   footer: {
     paddingTop: theme.spacing.md,
-    marginTop: theme.spacing.md,
+    /*marginTop: theme.spacing.md,*/
     borderTop: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
@@ -176,7 +176,7 @@ export function DoubleNavBar() {
 
   return (
     <Navbar hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-      <Navbar.Section mt="xs" />
+      <Navbar.Section />
       <Navbar.Section grow className={classes.wrapper}>
         <div className={classes.aside}>
           <div className={classes.logo}>
