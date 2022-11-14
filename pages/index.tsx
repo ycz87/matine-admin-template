@@ -11,7 +11,9 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { Welcome } from '../components/Welcome/Welcome';
+import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { DoubleNavBar } from '../components/DoubleNavBar/DoubleNavBar';
+import { HeaderMegaMenu } from '../components/HeaderMegaMenu/HeaderMegaMenu';
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
@@ -38,24 +40,9 @@ export default function AppShellDemo() {
           Application footer
         </Footer>
       }
-      header={
-        <Header height={{ base: 50, md: 70 }} p="md">
-          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery>
-
-            <Text>Application header</Text>
-          </div>
-        </Header>
-      }
+      header={<HeaderMegaMenu />}
     >
+      <ColorSchemeToggle />
       <Text>Resize app to see responsive navbar in action</Text>
       <Welcome />
       <Welcome />

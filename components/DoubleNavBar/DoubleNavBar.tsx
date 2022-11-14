@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createStyles, Navbar, UnstyledButton, Tooltip, Title } from '@mantine/core';
+import { createStyles, Navbar, UnstyledButton, Tooltip, Title, Burger } from '@mantine/core';
 import {
   IconHome2,
   IconGauge,
@@ -31,7 +31,7 @@ const useStyles = createStyles((theme) => ({
 
   main: {
     flex: 1,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
   },
 
   mainLink: {
@@ -82,7 +82,7 @@ const useStyles = createStyles((theme) => ({
   },
   footer: {
     paddingTop: theme.spacing.md,
-    marginTop: theme.spacing.md,
+    /*marginTop: theme.spacing.md,*/
     borderTop: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
@@ -129,38 +129,109 @@ const mainLinksMockdata = [
   { icon: IconSettings, label: 'Settings' },
 ];
 
-const linksMockdata = [
-  'Security',
-  'Settings',
-  'Dashboard',
-  'Releases',
-  'Account',
-  'Orders',
-  'Clients',
-  'Databases',
-  'Pull Requests',
-  'Open Issues',
-  'Wiki pages',
+const linksdata = [
+  {
+    icon: IconHome2,
+    label: 'Home',
+    sublinks: [
+      { icon: IconHome2, label: 'Home_Sub1', url: 'http://www.baidu.com' },
+      { icon: IconHome2, label: 'Home_Sub2', url: '' },
+    ],
+  },
+  {
+    icon: IconGauge,
+    label: 'Dashboard',
+    sublinks: [
+      { icon: IconGauge, label: 'Dashboard_Sub1', url: '' },
+      { icon: IconGauge, label: 'Dashboard_Sub2', url: '' },
+    ],
+  },
+  {
+    icon: IconDeviceDesktopAnalytics,
+    label: 'Analytics',
+    sublinks: [
+      { icon: IconGauge, label: 'Analytics_Sub1', url: '' },
+      { icon: IconGauge, label: 'Analytics_Sub2', url: '' },
+    ],
+  },
+  {
+    icon: IconCalendarStats,
+    label: 'Releases',
+    sublinks: [
+      { icon: IconGauge, label: 'Releases_Sub1', url: '' },
+      { icon: IconGauge, label: 'Releases_Sub2', url: '' },
+    ],
+  },
+  {
+    icon: IconUser,
+    label: 'Account',
+    sublinks: [
+      { icon: IconGauge, label: 'Account_Sub1', url: '' },
+      { icon: IconGauge, label: 'Account_Sub2', url: '' },
+    ],
+  },
+  {
+    icon: IconFingerprint,
+    label: 'Security',
+    sublinks: [
+      { icon: IconGauge, label: 'Security_Sub1', url: '' },
+      { icon: IconGauge, label: 'Security_Sub2', url: '' },
+    ],
+  },
+  {
+    icon: IconSettings,
+    label: 'Settings',
+    sublinks: [
+      { icon: IconGauge, label: 'Settings_Sub1', url: '' },
+      { icon: IconGauge, label: 'Settings_Sub2', url: '' },
+    ],
+  },
 ];
 
 export function DoubleNavBar() {
   const { classes, cx } = useStyles();
-  const [active, setActive] = useState('Releases');
-  const [activeLink, setActiveLink] = useState('Settings');
+  const [FirstActiveLinkLabel, setFirstActiveLinkLabel] = useState('Home');
+  const [SecondActiveLinkLabel, setSecondActiveLinkLabel] = useState('Home');
   const [opened, setOpened] = useState(false);
 
-  const mainLinks = mainLinksMockdata.map((link) => (
-    <Tooltip label={link.label} position="right" withArrow transitionDuration={0} key={link.label}>
+  const FirstLinks = linksdata.map((firstlink) => (
+    <Tooltip
+      label={firstlink.label}
+      position="right"
+      withArrow
+      transitionDuration={0}
+      key={firstlink.label}
+    >
       <UnstyledButton
-        onClick={() => setActive(link.label)}
-        className={cx(classes.mainLink, { [classes.mainLinkActive]: link.label === active })}
+        onClick={() => setFirstActiveLinkLabel(firstlink.label)}
+        className={cx(classes.mainLink, {
+          [classes.mainLinkActive]: firstlink.label === FirstActiveLinkLabel,
+        })}
       >
-        <link.icon stroke={1.5} />
+        <firstlink.icon stroke={1.5} />
       </UnstyledButton>
     </Tooltip>
   ));
 
-  const links = linksMockdata.map((link) => (
+  const SecondLinks = linksdata
+    .find((element) => element.label === FirstActiveLinkLabel)
+    .sublinks.map((secondlink) => (
+      <a
+        className={cx(classes.link, {
+          [classes.linkActive]: SecondActiveLinkLabel === secondlink.label,
+        })}
+        href={secondlink.url}
+        onClick={(event) => {
+          event.preventDefault();
+          setSecondActiveLinkLabel(secondlink.label);
+        }}
+        key={secondlink.label}
+      >
+        {secondlink.label}
+      </a>
+    ));
+
+  /*const links = testlinks.map((link) => (
     <a
       className={cx(classes.link, { [classes.linkActive]: activeLink === link })}
       href="/"
@@ -172,24 +243,23 @@ export function DoubleNavBar() {
     >
       {link}
     </a>
-  ));
+  ));*/
 
   return (
     <Navbar hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-      <Navbar.Section mt="xs" />
+      <Navbar.Section />
       <Navbar.Section grow className={classes.wrapper}>
         <div className={classes.aside}>
           <div className={classes.logo}>
             <MantineLogo type="mark" size={30} />
           </div>
-          {mainLinks}
+          {FirstLinks}
         </div>
         <div className={classes.main}>
           <Title order={4} className={classes.title}>
-            {active}
+            {FirstActiveLinkLabel}
           </Title>
-
-          {links}
+          {SecondLinks}
         </div>
       </Navbar.Section>
       <Navbar.Section className={classes.footer}>
